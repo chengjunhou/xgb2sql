@@ -8,7 +8,7 @@ Description:This tool enables in-database scoring of XGBoost model built in R. T
   call fun_xgboost_to_sql() and pass the trained XGBoost model, name of the ouput SQL file, 
   name of the input database table, and name of the unique key of that table. Output of the function is a SQL script.
 Depends: R (>= 3.1.0)
-License: What license is it under?
+License: MIT Free
 Encoding: UTF-8
 LazyData: true
 Imports:
