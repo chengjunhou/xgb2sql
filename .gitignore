@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+
+### File ###
+.pdf
+
+### Folder ###
+tmp/
