@@ -1,7 +1,7 @@
 Package: tree2sql
 Type: Package
 Title: Convert trained XGBoost model to SQL
-Version: 0.1.0
+Version: 0.1
 Author: Abhishek Bishoyi, Chengjun Hou
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description:This tool enables in-database scoring of XGBoost model built in R. To use this function, 
@@ -14,3 +14,5 @@ LazyData: true
 Imports:
   xgboost
   stringr
+RoxygenNote: 6.0.1
+
