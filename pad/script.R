@@ -2,7 +2,7 @@
 #' v0.1
 #' USAGE:
 #' fun_xgboost_to_sql(xgb_fit, output_file_name="model_output.SQL", input_table_name="[database].[table]","unique_id")
-
+#' Trial
 
 fun_xgboost_to_sql <- function(xgbModel,output_file_name,input_table_name,unique_id){
 
