@@ -2,7 +2,7 @@
 #' v0.1
 #' USAGE:
 #' fun_xgboost_to_sql(xgb_fit, output_file_name="model_output.SQL", input_table_name="[database].[table]","unique_id")
-#' Trial
+
 
 fun_xgboost_to_sql <- function(xgbModel,output_file_name,input_table_name,unique_id){
 
@@ -20,23 +20,23 @@ fun_xgboost_to_sql <- function(xgbModel,output_file_name,input_table_name,unique
     if(grepl("leaf",local_dump[dump_index])==TRUE){
       cat(as.numeric(sub(".*leaf= *(.*?)", "\\1", local_dump[dump_index])))
     } else{
-      cur_var_name <- g$feature_names[as.numeric(stringr::str_match( local_dump[dump_index],"f(.*?)\\<")[,2])+1]
-      cur_var_val <- as.numeric(stringr::str_match( local_dump[dump_index],"\\<(.*?)\\]")[,2])
+      cur_var_name <- g$feature_names[as.numeric(regmatches(local_dump[dump_index],regexec("f(.*?)[<]",local_dump[dump_index]))[[1]][2])+1]
+      cur_var_val <- as.numeric(regmatches(local_dump[dump_index],regexec("[<](.*?)[]]",local_dump[dump_index]))[[1]][2])
 
       # if YES
-      left_local_index <-  as.numeric(stringr::str_match( local_dump[dump_index],"yes=(.*?)\\,")[,2])
+      left_local_index <-  as.numeric(regmatches(local_dump[dump_index],regexec("yes=(.*?)[,]",local_dump[dump_index]))[[1]][2])
       left_dump_index <- which(branch_index==left_local_index)
 
 
 
       # if NO
-      right_local_index <-  as.numeric(stringr::str_match( local_dump[dump_index],"no=(.*?)\\,")[,2])
+      right_local_index <-  as.numeric(regmatches(local_dump[dump_index],regexec("no=(.*?)[,]",local_dump[dump_index]))[[1]][2])
       right_dump_index <- which(branch_index == right_local_index)
 
 
 
       # if missing
-      missing_local_index <-  as.numeric(stringr::str_match( local_dump[dump_index],"missing=(.*)")[,2])
+      missing_local_index <-  as.numeric(regmatches(local_dump[dump_index],regexec("missing=(.*?)$",local_dump[dump_index]))[[1]][2])
       missing_dump_index <- which(branch_index == missing_local_index)
 
 
@@ -84,9 +84,7 @@ fun_xgboost_to_sql <- function(xgbModel,output_file_name,input_table_name,unique
       tree_end <- all_tree_index[tree_num+1] - 1
     }
 
-    all_branch_index <- as.numeric(stringr::str_match( xgb_dump,"(.*?):")[,2])
-
-
+    all_branch_index <- as.numeric(sub("\\D*(\\d+).*", "\\1", xgb_dump))
 
     branch_index <- all_branch_index[tree_begin:tree_end]
     local_dump <- xgb_dump[tree_begin:tree_end]
