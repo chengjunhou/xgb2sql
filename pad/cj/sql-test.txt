@@ -1,0 +1,23 @@
+
+
+Insert into Customers values (NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+
+
+SELECT
+  CustomerID,
+  (case when Country = "Germany" then 1 else 0 end) AS CountryGermany,
+  (case when Country = "Mexico" then 1 else 0 end) AS CountryMexico,
+  (case when Country = "UK" then 1 else 0 end) AS CountryUK,
+  (case when Country IS NULL then 1 when Country NOT IN ('Germany','Mexico','UK') then 1 else 0 end) AS CountryNA
+FROM
+  Customers
+
+
+SELECT
+  CustomerID,
+  (case when Country IS NULL then NULL when Country = 'Germany' then 1 else 0 end) AS 'Country.Germany',
+  (case when Country IS NULL then NULL when Country = 'Mexico' then 1 else 0 end) AS 'Country.Mexico',
+  (case when Country IS NULL then NULL when Country = 'UK' then 1 else 0 end) AS 'Country.UK'
+FROM
+  Customers
+
