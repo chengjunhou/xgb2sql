@@ -1,6 +1,6 @@
 
 
-fun_data_prep <- function(data, meta=NULL, sep='.',
+fun_data_prep <- function(data, meta=NULL, sep='_',
                           output_file_name=NULL, input_table_name=NULL) {
 
   ### compare with input meta if given ###
@@ -124,7 +124,7 @@ fun_data_prep <- function(data, meta=NULL, sep='.',
     if (length(notin.vec)>0) {
       for (i in 1:length(notin.vec)) {
         data.mat[as.character(x[[names(notin.vec)[i]]])%in%notin.list[[names(notin.vec)[i]]],
-                 grep(paste0(names(notin.vec)[i],sep),colnames(data.mat))] <- 0
+                 grep(names(notin.vec)[i],colnames(data.mat))] <- 0
       }
     }
   }
