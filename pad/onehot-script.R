@@ -1,6 +1,6 @@
 
 
-fun_data_prep <- function(data, meta=NULL, sep='_',
+fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_with='',
                           output_file_name=NULL, input_table_name=NULL) {
 
   ### compare with input meta if given ###
@@ -57,6 +57,7 @@ fun_data_prep <- function(data, meta=NULL, sep='_',
       }
       contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
     }
+
   ### if contrasts given: change to factor with forced levels ###
   } else {
     contra.lst <- meta[['contrasts']]
@@ -81,8 +82,12 @@ fun_data_prep <- function(data, meta=NULL, sep='_',
   }
 
   ### generate one hot sql ###
-  catg.lvec = sapply(contra.lst, nrow)
+  # catg.lvec: nlevel for each catg col
+  catg.lvec <- sapply(contra.lst, nrow)
   names(catg.lvec) <- substr(names(catg.lvec),1,nchar(names(catg.lvec))-nchar(sep))
+  #
+  wsmove.lst <- list(prelvl=NULL, poslvl=NULL)
+  # sql.df: generate one hot sql script
   sql.df <- data.frame(matrix(1, ncol=10, nrow=sum(catg.lvec)))
   sql.df[['X1']] <- "(case when ["
   sql.df[['X3']] <- "] IS NULL then NULL when ["
@@ -97,7 +102,14 @@ fun_data_prep <- function(data, meta=NULL, sep='_',
     for (j in 1:catg.lvec[i]) {
       jtemp <- rownames(contra.lst[[i]])[j]
       sql.df[['X6']][index+1] <- jtemp
-      sql.df[['X8']][index+1] <- paste0(itemp,sep,jtemp)
+      if (ws_replace & grepl('[[:punct:] ]+',jtemp)) {
+        jtempws <- gsub('[[:punct:] ]+',ws_replace_with,jtemp)
+        wsmove.lst$prelvl <- c(wsmove.lst$prelvl, jtemp)
+        sql.df[['X8']][index+1] <- paste0(itemp,sep,jtempws)
+        wsmove.lst$poslvl <- c(wsmove.lst$poslvl, jtempws)
+      } else {
+        sql.df[['X8']][index+1] <- paste0(itemp,sep,jtemp)
+      }
       index = index + 1
     }
   }
@@ -128,6 +140,13 @@ fun_data_prep <- function(data, meta=NULL, sep='_',
       }
     }
   }
+  # replace white-space within colnames
+  if (ws_replace & length(wsmove.lst$prelvl)>0) {
+    for (i in 1:length(wsmove.lst$prelvl)) {
+      colnames(data.mat) <- gsub(wsmove.lst$prelvl[i],wsmove.lst$poslvl[i],colnames(data.mat))
+    }
+  }
+  # reorder cols
   data.mat <- data.mat[,order(colnames(data.mat))]
 
   ### output ###
