@@ -17,6 +17,7 @@
 #' @param input_table_name Name of the raw data table in SQL server, the SQL syntax will select from this table
 #' @return A list of 1). \code{meta} data for the transformation; 2). SQL syntax \code{onehot_sql}; 3). matrix \code{data.mat} as data after processing
 #'
+#' @import data.table
 #' @export
 #'
 #' @examples

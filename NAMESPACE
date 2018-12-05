@@ -2,3 +2,4 @@
 
 export(onehot2sql)
 export(xgb2sql)
+import(data.table)
