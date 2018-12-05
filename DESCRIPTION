@@ -1,16 +1,17 @@
 Package: tree2sql
 Type: Package
-Title: Convert trained XGBoost model to SQL
+Title: Convert trained XGBoost model object in R to SQL syntax
 Version: 0.1.0
 Author: Abhishek Bishoyi, Chengjun Hou
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description:This tool enables in-database scoring of XGBoost model built in R. To use this function, 
-  call fun_xgboost_to_sql() and pass the trained XGBoost model, name of the ouput SQL file, 
-  name of the input database table, and name of the unique key of that table. Output of the function is a SQL script.
+Maintainer: Chengjun Hou <chengjun.hou@gmail.com>
+Description: This tool enables in-database scoring of XGBoost model built in R. 
+  To use this core functionality, call xgb2sql() and pass the trained XGBoost model, 
+  name of the ouput SQL file, name of the input database table, and name of a unique identifier within the raw table. 
+  Output of the function is a SQL script suitable for all SQL engines.
 Depends: R (>= 3.1.0)
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
   xgboost
-  stringr
+RoxygenNote: 6.0.1
