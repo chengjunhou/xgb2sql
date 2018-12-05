@@ -35,7 +35,7 @@
 #'                eval_metric = 'mae')
 #'
 #' # generate model scoring SQL script
-#' fun_xgboost_to_sql(bst, output_file_name='xgb.txt', input_table_name='df_diamonds', unique_id='ID')
+#' xgb2sql(bst, output_file_name='xgb.txt', input_table_name='df_diamonds', unique_id='ID')
 
 
 xgb2sql <- function(xgbModel, unique_id, output_file_name, input_table_name){
