@@ -85,7 +85,7 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
   # catg.lvec: nlevel for each catg col
   catg.lvec <- sapply(contra.lst, nrow)
   names(catg.lvec) <- substr(names(catg.lvec),1,nchar(names(catg.lvec))-nchar(sep))
-  #
+  # wsmove.lst: list of var-lvl combination pre-pos ws process
   wsmove.lst <- list(prelvl=NULL, poslvl=NULL)
   # sql.df: generate one hot sql script
   sql.df <- data.frame(matrix(1, ncol=10, nrow=sum(catg.lvec)))
@@ -104,9 +104,9 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
       sql.df[['X6']][index+1] <- jtemp
       if (ws_replace & grepl('[[:punct:] ]+',jtemp)) {
         jtempws <- gsub('[[:punct:] ]+',ws_replace_with,jtemp)
-        wsmove.lst$prelvl <- c(wsmove.lst$prelvl, jtemp)
+        wsmove.lst$prelvl <- c(wsmove.lst$prelvl, paste0(itemp,sep,jtemp))
         sql.df[['X8']][index+1] <- paste0(itemp,sep,jtempws)
-        wsmove.lst$poslvl <- c(wsmove.lst$poslvl, jtempws)
+        wsmove.lst$poslvl <- c(wsmove.lst$prelvl, paste0(itemp,sep,jtempws))
       } else {
         sql.df[['X8']][index+1] <- paste0(itemp,sep,jtemp)
       }
@@ -142,9 +142,10 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
   }
   # replace white-space within colnames
   if (ws_replace & length(wsmove.lst$prelvl)>0) {
-    for (i in 1:length(wsmove.lst$prelvl)) {
-      colnames(data.mat) <- gsub(wsmove.lst$prelvl[i],wsmove.lst$poslvl[i],colnames(data.mat))
-    }
+    keepname.vec <- colnames(data.mat)[!colnames(data.mat)%in%wsmove.lst$prelvl]
+    wsmove.lst$prelvl <- c(wsmove.lst$prelvl, keepname.vec)
+    wsmove.lst$poslvl <- c(wsmove.lst$poslvl, keepname.vec)
+    colnames(data.mat) <- wsmove.lst$poslvl[match(colnames(data.mat),wsmove.lst$prelvl)]
   }
   # reorder cols
   data.mat <- data.mat[,order(colnames(data.mat))]
