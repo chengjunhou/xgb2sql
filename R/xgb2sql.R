@@ -38,7 +38,7 @@
 #' xgb2sql(bst, unique_id='ID', output_file_name='xgb.txt', input_table_name='df_diamonds')
 
 
-fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
+xgb2sql <- function(xgbModel, unique_id=NULL, output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
 
   ###### initial setup ######
   xgb_dump <- xgboost::xgb.dump(xgbModel)

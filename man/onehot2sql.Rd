@@ -5,7 +5,8 @@
 \title{Prepare training data so that it is ready for modeling, apply same transformation for any new data, also transform the transformatio into SQL syntax}
 \usage{
 onehot2sql(data, meta = NULL, sep = "_", ws_replace = TRUE,
-  ws_replace_with = "", output_file_name = NULL, input_table_name = NULL)
+  ws_replace_with = "", output_file_name = NULL,
+  input_table_name = NULL)
 }
 \arguments{
 \item{data}{Data object of class \code{data.frame} or \code{data.table}}

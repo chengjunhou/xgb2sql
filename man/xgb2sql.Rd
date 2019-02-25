@@ -4,7 +4,8 @@
 \alias{xgb2sql}
 \title{Transform xgboost model object trained in R to SQL syntax}
 \usage{
-xgb2sql(xgbModel, unique_id, output_file_name, input_table_name)
+xgb2sql(xgbModel, unique_id = NULL, output_file_name = NULL,
+  input_table_name = NULL, input_onehot_query = NULL)
 }
 \arguments{
 \item{xgbModel}{The trained model object of class \code{xgb.Booster}}
@@ -46,5 +47,5 @@ bst <- xgboost(data = x,
                eval_metric = 'mae')
 
 # generate model scoring SQL script
-xgb2sql(bst, output_file_name='xgb.txt', input_table_name='df_diamonds', unique_id='ID')
+xgb2sql(bst, unique_id='ID', output_file_name='xgb.txt', input_table_name='df_diamonds')
 }
