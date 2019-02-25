@@ -13,9 +13,9 @@ y <- out$model.matrix[,which(colnames(out$model.matrix)=='price')]
 
 bst <- xgboost(data = x,
                label = y,
-               max.depth = 3,
+               max.depth = 2,
                eta = .3,
-               nround = 5,
+               nround = 2,
                nthread = 2,
                objective = 'reg:linear',
                eval_metric = 'mae')
@@ -26,6 +26,9 @@ bst <- xgboost(data = x,
 y.pred = predict(bst, x)
 View(cbind(df, y.pred))
 
-fun_xgboost_to_sql(bst,output_file_name='pad/xgb.txt',
-                   input_table_name='df_diamonds_onehot',unique_id='ID')
+fun_xgboost_to_sql(bst,unique_id='ID',output_file_name='pad/xgb.txt',
+                   input_table_name='df_diamonds_onehot')
+
+fun_xgboost_to_sql(bst,unique_id='ID',output_file_name='pad/xcv.txt',
+                   input_onehot_query='select x,y,z,\nzxc,\nxcv,\ncvb from df_diamonds_onehot')
 
