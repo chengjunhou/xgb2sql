@@ -104,7 +104,7 @@ onehot2sql <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_wit
   num.vec <- names(class.lst)[class.lst%in%c('numeric','integer')]
   catg.vec <- names(class.lst)[!class.lst%in%c('numeric','integer')]
   catg.index <- which(names(data)%in%catg.vec)
-  factor.index <- which(class.lst%like% "factor")
+  factor.index <- which(unname(sapply(class.lst, function(x) 'factor'%in%x)))
 
   ### add sep for catg var ###
   if (!is.null(sep)) {
