@@ -142,8 +142,7 @@ onehot2sql <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_wit
     # catg feature with new level
     notin.list <- lapply(
       seq_along(x), function(i)
-        as.character(unique(x[[i]]))[ !
-                                        as.character(unique(x[[i]]))%in%rownames(contra.lst[[names(x)[i]]]) ])
+        as.character(unique(x[[i]]))[!as.character(unique(x[[i]]))%in%rownames(contra.lst[[names(x)[i]]])])
     notin.list <- lapply(notin.list, function(x) x[!is.na(x)])
     names(notin.list) <- paste0(catg.vec, sep)
     notin.vec <- sapply(notin.list, length)

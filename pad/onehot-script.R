@@ -58,7 +58,7 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
       contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
     }
 
-  ### if contrasts given: change to factor with forced levels ###
+    ### if contrasts given: change to factor with forced levels ###
   } else {
     contra.lst <- meta[['contrasts']]
     if (class(data)[1]=='data.table') {
@@ -73,8 +73,7 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
     # catg feature with new level
     notin.list <- lapply(
       seq_along(x), function(i)
-        as.character(unique(x[[i]]))[ !
-                     as.character(unique(x[[i]]))%in%rownames(contra.lst[[names(x)[i]]]) ])
+        as.character(unique(x[[i]]))[!as.character(unique(x[[i]]))%in%rownames(contra.lst[[names(x)[i]]])])
     notin.list <- lapply(notin.list, function(x) x[!is.na(x)])
     names(notin.list) <- paste0(catg.vec, sep)
     notin.vec <- sapply(notin.list, length)
@@ -106,7 +105,7 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
         jtempws <- gsub('[[:punct:] ]+',ws_replace_with,jtemp)
         wsmove.lst$prelvl <- c(wsmove.lst$prelvl, paste0(itemp,sep,jtemp))
         sql.df[['X8']][index+1] <- paste0(itemp,sep,jtempws)
-        wsmove.lst$poslvl <- c(wsmove.lst$prelvl, paste0(itemp,sep,jtempws))
+        wsmove.lst$poslvl <- c(wsmove.lst$poslvl, paste0(itemp,sep,jtempws))
       } else {
         sql.df[['X8']][index+1] <- paste0(itemp,sep,jtemp)
       }

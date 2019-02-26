@@ -56,20 +56,26 @@ fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, output_file_name=NULL, 
   sink(output_file_name, type ="output")
 
   cat("SELECT ", unique_id, ", ")
-  if(xgbModel$params$objective == "binary:logistic" | xgbModel$params$objective =="reg:logistic"){
+  if(xgbModel$params$objective == "binary:logistic" | xgbModel$params$objective == "reg:logistic" | xgbModel$params$objective == "binary:logitraw"){
     p0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
     b0 <- log(p0/(1-p0))
-    cat("1/(1+exp(-(",b0,"+ SUM(tree)))) AS PRED")
+    if (xgbModel$params$objective == "binary:logitraw") {
+      cat(b0,"+ SUM(ONETREE) AS PRED")
+    } else {
+      cat("1/(1+exp(-(",b0,"+ SUM(ONETREE)))) AS PRED")
+    }
+  } else if (xgbModel$params$objective == "binary:hinge") {
+    b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
+    cat("IF((",b0,"+ SUM(ONETREE) )>0,1,0) AS PRED")
   } else if(xgbModel$params$objective == "reg:linear"){
     b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
-    cat(b0,"+ SUM(tree) AS PRED")
-  } else if(xgbModel$params$objective == "reg:gamma" | xgbModel$params$objective == "count:poisson"){
+    cat(b0,"+ SUM(ONETREE) AS PRED")
+  } else if(xgbModel$params$objective == "reg:gamma" | xgbModel$params$objective == "count:poisson" | xgbModel$params$objective == "reg:tweedie"){
     mu0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
     b0 <- log(mu0)
-    cat("exp(",b0,"+ SUM(tree)) AS PRED")
-  } else if(xgbModel$params$objective == "reg:tweedie"){
-    b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
-    cat("exp(",b0,"+ SUM(tree)) AS PRED")
+    cat("exp(",b0,"+ SUM(ONETREE)) AS PRED")
+  } else {
+    warning("query is generated with unsupported objective")
   }
 
   cat("\nFROM (  ")
