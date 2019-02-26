@@ -55,3 +55,20 @@ cat(temp)
 sink()
 Sys.time() - time.now
 
+
+
+
+source('pad/script.R')
+time.now <- Sys.time()
+fun_xgboost_to_sql(bst,unique_id='ID',output_file_name='pad/xgb.txt',
+                   input_table_name='df_diamonds_onehot')
+Sys.time() - time.now
+
+
+source('pad/scriptt.R')
+time.now <- Sys.time()
+fun_xgboost_to_sql(bst,unique_id='ID',output_file_name='pad/xgb.txt',
+                   input_table_name='df_diamonds_onehot')
+Sys.time() - time.now
+
+
