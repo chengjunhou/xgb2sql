@@ -4,7 +4,8 @@
 #' fun_xgboost_to_sql(xgb_fit, output_file_name="model_output.SQL", input_table_name="[database].[table]","unique_id")
 
 
-fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
+fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, print_progress=FALSE,
+                               output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
 
   ###### initial setup ######
   xgb_dump <- xgboost::xgb.dump(xgbModel)
@@ -98,6 +99,12 @@ fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, output_file_name=NULL, 
     cat(" AS ONETREE")
     if(tree_num != length(all_tree_index)){
       cat(" FROM ", input_table_name, "\n UNION ALL \n")
+    }
+
+    if (print_progress==TRUE) {
+      sink()
+      cat("====== Processing", tree_num, "/", length(all_tree_index), "Tree ======\n")
+      sink(output_file_name, type ="output", append=TRUE)
     }
   }
   cat(" FROM ",input_table_name,"  \n) AS TREETABLE GROUP BY ",unique_id)
