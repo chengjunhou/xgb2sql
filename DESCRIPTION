@@ -18,8 +18,11 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  xgboost (>= 0.81.0.1)
-Suggests:
+  xgboost (>= 0.81.0.1),
   data.table (>= 1.12.0)
+Suggests:
+  ggplot2,
+  knitr,
+  rmarkdown
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

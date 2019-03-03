@@ -45,6 +45,7 @@ Note that the input database table should be generated from the raw table using 
 or provide the one-hot encoding query as input \code{input_onehot_query} to this function, serving as sub-query inside the final model scoring query.
 }
 \examples{
+library(xgboost)
 # load data
 df = data.frame(ggplot2::diamonds)
 head(df)

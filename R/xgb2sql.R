@@ -30,6 +30,7 @@
 #' @export
 #'
 #' @examples
+#' library(xgboost)
 #' # load data
 #' df = data.frame(ggplot2::diamonds)
 #' head(df)

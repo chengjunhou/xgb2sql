@@ -42,6 +42,7 @@ If \code{meta} is specified as input to the function, the transformation and the
 follow what is kept in \code{meta} exactly.
 }
 \examples{
+library(data.table)
 ### load test data
 df = data.frame(ggplot2::diamonds)
 head(df)

@@ -23,9 +23,14 @@
 #'                   3). SQL query \code{onehot_sql} performing the exact one-hot encoding in the database.
 #'
 #' @import data.table
+#' @importFrom stats contrasts
+#' @importFrom stats model.frame
+#' @importFrom stats model.matrix
+#' @importFrom stats na.pass
 #' @export
 #'
 #' @examples
+#' library(data.table)
 #' ### load test data
 #' df = data.frame(ggplot2::diamonds)
 #' head(df)
@@ -141,7 +146,7 @@ onehot2sql <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_wit
       contra.lst <- lapply(data[,catg.index,with=FALSE], contrasts, contrasts=FALSE)
     } else {
       if (length(changeclass.index)>0) {
-        data[,changeclass.index] <- lapply(df[,changeclass.index], as.factor)
+        data[,changeclass.index] <- lapply(data[,changeclass.index], as.factor)
       }
       contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
     }

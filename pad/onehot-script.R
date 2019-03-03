@@ -67,7 +67,7 @@ fun_data_prep <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_
       contra.lst <- lapply(data[,catg.index,with=FALSE], contrasts, contrasts=FALSE)
     } else {
       if (length(changeclass.index)>0) {
-        data[,changeclass.index] <- lapply(df[,changeclass.index], as.factor)
+        data[,changeclass.index] <- lapply(data[,changeclass.index], as.factor)
       }
       contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
     }

@@ -3,3 +3,7 @@
 export(onehot2sql)
 export(xgb2sql)
 import(data.table)
+importFrom(stats,contrasts)
+importFrom(stats,model.frame)
+importFrom(stats,model.matrix)
+importFrom(stats,na.pass)
