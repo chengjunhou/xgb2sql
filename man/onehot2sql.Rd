@@ -2,41 +2,47 @@
 % Please edit documentation in R/onehot2sql.R
 \name{onehot2sql}
 \alias{onehot2sql}
-\title{Prepare training data so that it is ready for modeling, apply same transformation for any new data, also transform the transformatio into SQL syntax}
+\title{Prepare training data in R so that it is ready for XGBoost model fitting.
+Meta information is stored so the exact transformation can be applied to any new data.
+It also outputs SQL query performing the exact one-hot encoding for in-database data preparation.}
 \usage{
 onehot2sql(data, meta = NULL, sep = "_", ws_replace = TRUE,
-  ws_replace_with = "", output_file_name = NULL,
+  ws_replace_with = "", unique_id = NULL, output_file_name = NULL,
   input_table_name = NULL)
 }
 \arguments{
-\item{data}{Data object of class \code{data.frame} or \code{data.table}}
+\item{data}{Data object of class \code{data.frame} or \code{data.table}.}
 
-\item{meta}{Optional, it keeps track of all the transformation that has been taken}
+\item{meta}{Optional, a list keeps track of all the transformation that has been taken on the categorical features.}
 
-\item{sep}{Seperation symbol between the categorical features and their levels, the combination are column names inside \code{data.mat}, default to '_'}
+\item{sep}{Seperation symbol between the categorical features and their levels, which will be the column names inside \code{data.mat}, default to "_".}
 
-\item{ws_replace}{Bool indicator controls whether white-space and punctuation inside categorical featuress levels should be replaced, default to TRUE which means replacing}
+\item{ws_replace}{Boolean indicator controls whether white-space and punctuation inside categorical feature levels should be replaced, default to TRUE.}
 
-\item{ws_replace_with}{Replacing symbol, default to '' which means all white-space and punctuation should be removed}
+\item{ws_replace_with}{Replacing symbol, default to '' which means all white-space and punctuation should be removed.}
 
-\item{output_file_name}{File name that the SQL syntax will write to}
+\item{unique_id}{A row unique identifier is crucial for in-database scoing of xgboost model. If not given, SQL query will be generated with id name "ROW_KEY".}
 
-\item{input_table_name}{Name of the raw data table in SQL server, the SQL syntax will select from this table}
+\item{output_file_name}{Optional, a file name that the SQL query will write to.}
+
+\item{input_table_name}{Name of raw data table in the database, that the SQL query will select from. If not given, SQL query will be generated with table name "INPUT_TABLE".}
 }
 \value{
-A list of 1). \code{meta} data for the transformation; 2). SQL syntax \code{onehot_sql}; 3). matrix \code{data.mat} as data after processing
+A list of 1). \code{meta} data tracking the transformation;
+                  2). matrix \code{data.mat} is the data after processing which is ready for xgboost fitting;
+                  3). SQL query \code{onehot_sql} performing the exact one-hot encoding in the database.
 }
 \description{
 This function performs full one-hot encoding for all the categorical features inside the training data,
-while all NAs inside both categorical and numeric features are perserved.
+with all NAs inside both categorical and numeric features perserved.
 Other than outputing a matrix \code{data.mat} which is the data after processing,
-it also outputs \code{meta} information keeping track of all the transformation the function conducts,
-and its SQL syntax is kept in output \code{onehot_sql} or write to a file specified by \code{output_file_name}.
-If \code{meta} is specified as input to the function, the transformation and its corresponding SQL syntax will
+it also outputs \code{meta} information keeping track of all the transformation the function performs,
+while SQL query for the transformation is kept in output \code{onehot_sql} and write to the file specified by \code{output_file_name} if given.
+If \code{meta} is specified as input to the function, the transformation and the corresponding SQL query will
 follow what is kept in \code{meta} exactly.
 }
 \examples{
-# load test data
+### load test data
 df = data.frame(ggplot2::diamonds)
 head(df)
 
@@ -52,12 +58,12 @@ d2[, tsdt:=as.IDate('2017-01-05')]
 d2[1:3, tsdt:=tsdt-1]
 head(d2)
 
-# out is obtained for training data
+### out is obtained for training data
 out <- onehot2sql(df)
-out1 <- onehot2sql(d1)  # NA has no influence
-out2 <- onehot2sql(d2)  # other catg class other than factor
+out1 <- onehot2sql(d1)  # NA is kept in the output
+out2 <- onehot2sql(d2)  # all non-numeric features will be treated as categorical
 
-# perform same transformation for newdata when contrasts.arg is given
+### perform same transformation for new data when meta is given
 # test-1: new data has column class change
 newdata = df[1:5,]
 newdata$cut = as.character(newdata$cut)
