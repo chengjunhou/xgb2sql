@@ -1,12 +1,11 @@
+inst/doc
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 
-
 ### File ###
 .pdf
 .html
-
 ### Folder ###
 tmp/
