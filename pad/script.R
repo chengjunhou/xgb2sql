@@ -4,7 +4,7 @@
 #' fun_xgboost_to_sql(xgb_fit, output_file_name="model_output.SQL", input_table_name="[database].[table]","unique_id")
 
 
-fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, print_progress=FALSE,
+fun_xgboost_to_sql <- function(xgbModel, print_progress=FALSE, unique_id=NULL,
                                output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
 
   ###### initial setup ######
@@ -13,16 +13,16 @@ fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, print_progress=FALSE,
   all_tree_index <- which(first_letter=="b")
   if (is.null(unique_id)) {
     unique_id <- "ROW_KEY"
-    warning("query is generated with row unique id named as ROW_KEY")
+    message("query is written to file with row unique id named as ROW_KEY")
   }
   if (is.null(output_file_name)) {
     stop("output file not specified")
   }
   if (is.null(input_table_name) & is.null(input_onehot_query)) {
-    input_table_name <- "INPUT_TABLE"
-    warning("query is generated with input table named as INPUT_TABLE")
+    input_table_name <- "MODREADY_TABLE"
+    message("query is written to file with input table named as MODREADY_TABLE")
   } else if (is.null(input_table_name) & !is.null(input_onehot_query)) {
-    input_table_name <- paste0("( \n",input_onehot_query," \n) AS MODREADY ")
+    input_table_name <- paste0("( \n",input_onehot_query," \n) AS MODREADY_TABLE ")
   }
 
   ###### recurse fun ######
@@ -61,20 +61,20 @@ fun_xgboost_to_sql <- function(xgbModel, unique_id=NULL, print_progress=FALSE,
     p0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
     b0 <- log(p0/(1-p0))
     if (xgbModel$params$objective == "binary:logitraw") {
-      cat(b0,"+ SUM(ONETREE) AS PRED")
+      cat(b0,"+ SUM(ONETREE) AS XGB_PRED")
     } else {
-      cat("1/(1+exp(-(",b0,"+ SUM(ONETREE)))) AS PRED")
+      cat("1/(1+exp(-(",b0,"+ SUM(ONETREE)))) AS XGB_PRED")
     }
   } else if (xgbModel$params$objective == "binary:hinge") {
     b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
-    cat("IF((",b0,"+ SUM(ONETREE) )>0,1,0) AS PRED")
+    cat("IF((",b0,"+ SUM(ONETREE) )>0,1,0) AS XGB_PRED")
   } else if(xgbModel$params$objective == "reg:linear"){
     b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
-    cat(b0,"+ SUM(ONETREE) AS PRED")
+    cat(b0,"+ SUM(ONETREE) AS XGB_PRED")
   } else if(xgbModel$params$objective == "reg:gamma" | xgbModel$params$objective == "count:poisson" | xgbModel$params$objective == "reg:tweedie"){
     mu0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
     b0 <- log(mu0)
-    cat("exp(",b0,"+ SUM(ONETREE)) AS PRED")
+    cat("exp(",b0,"+ SUM(ONETREE)) AS XGB_PRED")
   } else {
     warning("query is generated with unsupported objective")
   }

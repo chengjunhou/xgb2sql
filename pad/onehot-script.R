@@ -1,7 +1,21 @@
 
 
-fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_with='',
-                          output_file_name=NULL, input_table_name=NULL) {
+fun_data_prep <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_with="",
+                          unique_id=NULL, output_file_name=NULL, input_table_name=NULL) {
+
+  ### initial setup ###
+  if (is.null(unique_id)) {
+    unique_id <- "ROW_KEY"
+    if (!is.null(output_file_name)) {
+      message("query is written to file with row unique id named as ROW_KEY")
+    }
+  }
+  if (is.null(input_table_name)) {
+    input_table_name <- "INPUT_TABLE"
+    if (!is.null(output_file_name)) {
+      message("query is written to file with input table named as INPUT_TABLE")
+    }
+  }
 
   ### compare with input meta if given ###
   if (!is.null(meta[['num.vec']]) | !is.null(meta[['catg.vec']])) {
@@ -116,7 +130,7 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
   sql.df[['X10']] <- paste0(sql.df[['X1']],sql.df[['X2']],sql.df[['X3']],sql.df[['X4']],
                             sql.df[['X5']],sql.df[['X6']],sql.df[['X7']],sql.df[['X8']],
                             sql.df[['X9']])
-  onehot_sql <- paste0("SELECT ", "[",
+  onehot_sql <- paste0("SELECT ", unique_id, ", ", "[",
                        paste(num.vec,collapse='], ['), "], \n",
                        paste(sql.df$X10,collapse=''),
                        "FROM ", input_table_name)
@@ -153,8 +167,8 @@ fun_data_prep <- function(data, meta=NULL, sep='_', ws_replace=TRUE, ws_replace_
   out.lst <- list()
   out.lst[['meta']] <- list('num.vec'=num.vec, 'catg.vec'=catg.vec,
                             'contrasts'=contra.lst)
-  out.lst[['sql']] <- onehot_sql
   out.lst[['model.matrix']] <- data.mat
+  out.lst[['sql']] <- onehot_sql
 
   return(out.lst)
 }

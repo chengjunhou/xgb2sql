@@ -1,3 +1,4 @@
+library(data.table)
 source('pad/onehot-script.R')
 
 df = data.frame(ggplot2::diamonds)
