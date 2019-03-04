@@ -1,4 +1,4 @@
-Package: tree2sql
+Package: xgb2sql
 Type: Package
 Title: Convert trained XGBoost model to SQL query
 Version: 0.1.1
