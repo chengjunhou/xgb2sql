@@ -51,11 +51,11 @@
 #'                eval_metric = 'mae')
 #'
 #' # generate model scoring SQL script with ROW_KEY and MODREADY_TABLE
-#' xgb2sql(bst, output_file_name='xgb.txt')
+#' booster2sql(bst, output_file_name='xgb.txt')
 
 
-xgb2sql <- function(xgbModel, print_progress=FALSE, unique_id=NULL,
-                    output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
+booster2sql <- function(xgbModel, print_progress=FALSE, unique_id=NULL,
+                        output_file_name=NULL, input_table_name=NULL, input_onehot_query=NULL) {
 
   ###### initial setup ######
   xgb_dump <- xgboost::xgb.dump(xgbModel)
