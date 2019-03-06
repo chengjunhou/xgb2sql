@@ -6,10 +6,10 @@
 #' and name of a unique identifier within that table \code{unique_id} as input,
 #' writes the SQL query to a file specified by \code{output_file_name}.
 #' Note that the input database table should be generated from the raw table using the one-hot encoding query output by \code{onehot2sql},
-#' or provide the one-hot encoding query as input \code{input_onehot_query} to this function, serving as sub-query inside the final model scoring query.
+#' or to provide the one-hot encoding query as input \code{input_onehot_query} to this function, working as sub-query inside the final model scoring query.
 #'
 #' @param xgbModel The trained model object of class \code{xgb.Booster}.
-#' Current supported booster is \code{booster="gbtree"}, \code{objective} options are:
+#' Current supported booster is \code{booster="gbtree"}, supported \code{objective} options are:
 #' \itemize{
 #'   \item – \code{reg:linear}: linear regression.
 #'   \item – \code{reg:logistic}: logistic regression.

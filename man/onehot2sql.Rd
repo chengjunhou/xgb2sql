@@ -35,9 +35,9 @@ A list of 1). \code{meta} data tracking the transformation;
 \description{
 This function performs full one-hot encoding for all the categorical features inside the training data,
 with all NAs inside both categorical and numeric features preserved.
-Other than outputting a matrix \code{data.mat} which is the data after processing,
+Other than outputting a matrix \code{model.matrix} which is the data after processing,
 it also outputs \code{meta} information keeping track of all the transformation the function performs,
-while SQL query for the transformation is kept in output \code{onehot_sql} and write to the file specified by \code{output_file_name} if given.
+while SQL query for the transformation is kept in output \code{sql} and write to the file specified by \code{output_file_name}.
 If \code{meta} is specified as input to the function, the transformation and the corresponding SQL query will
 follow what is kept in \code{meta} exactly.
 }
