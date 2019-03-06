@@ -9,7 +9,7 @@ We are still working on improving the computation efficiency. However, all funct
 ## Installation
 Development version:
 ```r
-devtools::install_github("chengjunhou/tree2sql")
+devtools::install_github("chengjunhou/xgb2sql")
 ```
 
 
@@ -21,7 +21,7 @@ df$ID = seq(1, dim(df)[1])
 head(df)
 
 ### data processing
-out <- tree2sql::onehot2sql(df, output_file_name='onehot.txt')
+out <- xgb2sql::onehot2sql(df, output_file_name='onehot.txt')
 # sql one-hot script is outputed to onehot.txt
 x <- out$model.matrix[,-which(colnames(out$model.matrix)=='price')]
 y <- out$model.matrix[,which(colnames(out$model.matrix)=='price')]
@@ -32,13 +32,16 @@ bst <- xgboost(data = x,
                max.depth = 3,
                eta = .3,
                nround = 5,
-              nthread = 2,
-               objective = 'reg:linear',
-              eval_metric = 'mae')
+               objective = 'reg:linear')
 
 ### generate model scoring SQL script
-tree2sql::xgb2sql(bst, output_file_name='xgb.txt', input_table_name='df_diamonds', unique_id='ID')
+xgb2sql::booster2sql(bst, output_file_name='xgb.txt', input_table_name='df_diamonds', unique_id='ID')
 # sql model scoring script is outputed to xgb.txt
 # note that there must be a unique identifier column inside the input table
 ```
+
+## Links
+
+
+[![Travis build status](https://travis-ci.org/chengjunhou/xgb2sql.svg?branch=master)](https://travis-ci.org/chengjunhou/xgb2sql)
 
