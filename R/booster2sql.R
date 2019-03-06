@@ -1,7 +1,7 @@
 #' Transform XGBoost model object to SQL query
 #'
-#' This function generates SQL query for in-database scoring of xgboost models,
-#' providing a robust and efficient way of model deployment. It takes in the trained xgboost model \code{xgbModel},
+#' This function generates SQL query for in-database scoring of XGBoost models,
+#' providing a robust and efficient way of model deployment. It takes in the trained XGBoost model \code{xgbModel},
 #' name of the input database table \code{input_table_name},
 #' and name of a unique identifier within that table \code{unique_id} as input,
 #' writes the SQL query to a file specified by \code{output_file_name}.
@@ -37,8 +37,8 @@
 #'
 #' # data processing
 #' out <- onehot2sql(df)
-#' x <- out$model.matrix[,-which(colnames(out$model.matrix)=='price')]
-#' y <- out$model.matrix[,which(colnames(out$model.matrix)=='price')]
+#' x <- out$model.matrix[,colnames(out$model.matrix)!='price']
+#' y <- out$model.matrix[,colnames(out$model.matrix)=='price']
 #'
 #' # model training
 #' bst <- xgboost(data = x,
@@ -47,8 +47,7 @@
 #'                eta = .3,
 #'                nround = 5,
 #'                nthread = 1,
-#'                objective = 'reg:linear',
-#'                eval_metric = 'mae')
+#'                objective = 'reg:linear')
 #'
 #' # generate model scoring SQL script with ROW_KEY and MODREADY_TABLE
 #' booster2sql(bst, output_file_name='xgb.txt')

@@ -15,13 +15,13 @@ onehot2sql(data, meta = NULL, sep = "_", ws_replace = TRUE,
 
 \item{meta}{Optional, a list keeps track of all the transformation that has been taken on the categorical features.}
 
-\item{sep}{Seperation symbol between the categorical features and their levels, which will be the column names inside \code{data.mat}, default to "_".}
+\item{sep}{Separation symbol between the categorical features and their levels, which will be the column names inside \code{data.mat}, default to "_".}
 
 \item{ws_replace}{Boolean indicator controls whether white-space and punctuation inside categorical feature levels should be replaced, default to TRUE.}
 
 \item{ws_replace_with}{Replacing symbol, default to '' which means all white-space and punctuation should be removed.}
 
-\item{unique_id}{A row unique identifier is crucial for in-database scoing of xgboost model. If not given, SQL query will be generated with id name "ROW_KEY".}
+\item{unique_id}{A row unique identifier is crucial for in-database scoring of XGBoost model. If not given, SQL query will be generated with id name "ROW_KEY".}
 
 \item{output_file_name}{Optional, a file name that the SQL query will write to.}
 
@@ -29,13 +29,13 @@ onehot2sql(data, meta = NULL, sep = "_", ws_replace = TRUE,
 }
 \value{
 A list of 1). \code{meta} data tracking the transformation;
-                  2). matrix \code{data.mat} is the data after processing which is ready for xgboost fitting;
-                  3). SQL query \code{onehot_sql} performing the exact one-hot encoding in the database.
+                  2). matrix \code{model.matrix} is the data after processing which is ready for XGBoost fitting;
+                  3). SQL query \code{sql} performing the exact one-hot encoding in the database.
 }
 \description{
 This function performs full one-hot encoding for all the categorical features inside the training data,
-with all NAs inside both categorical and numeric features perserved.
-Other than outputing a matrix \code{data.mat} which is the data after processing,
+with all NAs inside both categorical and numeric features preserved.
+Other than outputting a matrix \code{data.mat} which is the data after processing,
 it also outputs \code{meta} information keeping track of all the transformation the function performs,
 while SQL query for the transformation is kept in output \code{onehot_sql} and write to the file specified by \code{output_file_name} if given.
 If \code{meta} is specified as input to the function, the transformation and the corresponding SQL query will

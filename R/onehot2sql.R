@@ -19,8 +19,8 @@
 #' @param output_file_name Optional, a file name that the SQL query will write to.
 #' @param input_table_name Name of raw data table in the database, that the SQL query will select from. If not given, SQL query will be generated with table name "INPUT_TABLE".
 #' @return A list of 1). \code{meta} data tracking the transformation;
-#'                   2). matrix \code{data.mat} is the data after processing which is ready for XGBoost fitting;
-#'                   3). SQL query \code{onehot_sql} performing the exact one-hot encoding in the database.
+#'                   2). matrix \code{model.matrix} is the data after processing which is ready for XGBoost fitting;
+#'                   3). SQL query \code{sql} performing the exact one-hot encoding in the database.
 #'
 #' @import data.table
 #' @importFrom stats contrasts

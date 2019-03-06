@@ -24,7 +24,7 @@ Current supported booster is \code{booster="gbtree"}, \code{objective} options a
 
 \item{print_progress}{Boolean indicator controls whether the SQL generating progress should be printed to console.}
 
-\item{unique_id}{A row unique identifier is crucial for in-database scoing of xgboost model. If not given, SQL query will be generated with id name "ROW_KEY".}
+\item{unique_id}{A row unique identifier is crucial for in-database scoring of XGBoost model. If not given, SQL query will be generated with id name "ROW_KEY".}
 
 \item{output_file_name}{File name that the SQL syntax will write to. It must not be empty in order for this function to run.}
 
@@ -36,8 +36,8 @@ Current supported booster is \code{booster="gbtree"}, \code{objective} options a
 The SQL query will write to the file specified by \code{output_file_name}.
 }
 \description{
-This function generates SQL query for in-database scoring of xgboost models,
-providing a robust and efficient way of model deployment. It takes in the trained xgboost model \code{xgbModel},
+This function generates SQL query for in-database scoring of XGBoost models,
+providing a robust and efficient way of model deployment. It takes in the trained XGBoost model \code{xgbModel},
 name of the input database table \code{input_table_name},
 and name of a unique identifier within that table \code{unique_id} as input,
 writes the SQL query to a file specified by \code{output_file_name}.
@@ -52,8 +52,8 @@ head(df)
 
 # data processing
 out <- onehot2sql(df)
-x <- out$model.matrix[,-which(colnames(out$model.matrix)=='price')]
-y <- out$model.matrix[,which(colnames(out$model.matrix)=='price')]
+x <- out$model.matrix[,colnames(out$model.matrix)!='price']
+y <- out$model.matrix[,colnames(out$model.matrix)=='price']
 
 # model training
 bst <- xgboost(data = x,
@@ -62,8 +62,7 @@ bst <- xgboost(data = x,
                eta = .3,
                nround = 5,
                nthread = 1,
-               objective = 'reg:linear',
-               eval_metric = 'mae')
+               objective = 'reg:linear')
 
 # generate model scoring SQL script with ROW_KEY and MODREADY_TABLE
 booster2sql(bst, output_file_name='xgb.txt')
