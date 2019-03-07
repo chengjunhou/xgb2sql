@@ -12,7 +12,7 @@
 #'
 #' @param data Data object of class \code{data.frame} or \code{data.table}.
 #' @param meta Optional, a list keeps track of all the transformation that has been taken on the categorical features.
-#' @param sep Separation symbol between the categorical features and their levels, which will be the column names inside \code{data.mat}, default to "_".
+#' @param sep Separation symbol between the categorical features and their levels, which will be the column names inside the output \code{model.matrix}, default to "_".
 #' @param ws_replace Boolean indicator controls whether white-space and punctuation inside categorical feature levels should be replaced, default to TRUE.
 #' @param ws_replace_with Replacing symbol, default to '' which means all white-space and punctuation should be removed.
 #' @param unique_id  A row unique identifier is crucial for in-database scoring of XGBoost model. If not given, SQL query will be generated with id name "ROW_KEY".

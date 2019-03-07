@@ -15,7 +15,7 @@ onehot2sql(data, meta = NULL, sep = "_", ws_replace = TRUE,
 
 \item{meta}{Optional, a list keeps track of all the transformation that has been taken on the categorical features.}
 
-\item{sep}{Separation symbol between the categorical features and their levels, which will be the column names inside \code{data.mat}, default to "_".}
+\item{sep}{Separation symbol between the categorical features and their levels, which will be the column names inside the output \code{model.matrix}, default to "_".}
 
 \item{ws_replace}{Boolean indicator controls whether white-space and punctuation inside categorical feature levels should be replaced, default to TRUE.}
 

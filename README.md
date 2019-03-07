@@ -197,7 +197,7 @@ cat(readChar('xgb.txt', file.info('xgb.txt')$size))
 Items under development are:
 - Support for `booster="gblinear`.
 - Support for other `objective`.
-_ Support for customized loss function.
+- Support for customized loss function.
 
 
 

@@ -1,18 +1,19 @@
 Package: xgb2sql
 Type: Package
-Title: Convert trained XGBoost model to SQL query
-Version: 0.1.1
-Description: This tool enables in-database scoring of XGBoost models built in R by translating trained model objects into SQL query. 
-  'XGBoost' <http://xgboost.readthedocs.io/en/latest/index.html> provides parallel tree boosting (also known as GBDT, GBM) algorithms
-  in a highly efficient, flexible and portable way.
+Title: Convert Trained XGBoost Model to SQL Query
+Version: 0.1.2
+Description: This tool enables in-database scoring of XGBoost models built in R, by translating trained model objects into SQL query. 
+  XGBoost <https://xgboost.readthedocs.io/en/latest/index.html> provides parallel tree boosting (also known as gradient boosting machine, or GBM) algorithms
+  in a highly efficient, flexible and portable way. GBM algorithm is introduced by Friedman (2001) <doi:10.1214/aos/1013203451>, 
+  and more details on XGBoost can be found in Chen & Guestrin (2016) <doi:10.1145/2939672.2939785>.
 Authors@R: c(
   person("Chengjun", "Hou", role = c("aut", "cre"), email = "chengjun.hou@gmail.com"),
   person("Abhishek", "Bishoyi", role = c("aut"), email = "abhishek.bishoyi@gmail.com")
   )
 Author: Chengjun Hou [aut, cre], Abhishek Bishoyi [aut]
 Maintainer: Chengjun Hou <chengjun.hou@gmail.com>
-URL: http://github.com/chengjunhou/tree2sql
-BugReports: http://github.com/chengjunhou/tree2sql/issues
+URL: https://github.com/chengjunhou/xgb2sql
+BugReports: https://github.com/chengjunhou/xgb2sql/issues
 Depends: R (>= 3.1.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

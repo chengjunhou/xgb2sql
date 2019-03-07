@@ -25,12 +25,12 @@ but sometimes the model needs to be integrated into some other systems that the 
 Plus moving large amount of data between database and R could be time and memory consuming. 
 So we propose R package `xgb2sql` enabling in-database scoring of XGBoost models built in R by translating trained model objects into SQL query.
 
-[CRAN Task View: Model Deployment with R](http://cran.r-project.org/web/views/ModelDeployment.html) 
+[CRAN Task View: Model Deployment with R](https://CRAN.R-project.org/view=ModelDeployment) 
 categorizes the process of deploying models to various environments for scoring or inferencing on new data into two categories.
 The first category is **Deployment through Different Types of Artifacts**, which basically means exporting the model as an object, 
 then using supported software/platform to consume this object scoring out the model predictions.
 The other category is **Deployment through Cloud/Server**, which includes 
-a). providing an R interface to third-party managed services such as [Google Cloud Machine Learning Engine](http://cloud.google.com/ml-engine/);
+a). providing an R interface to third-party managed services such as [Google Cloud Machine Learning Engine](https://cloud.google.com/ml-engine/);
 b). turning R code into web API and opening service on the server.
 Our approach provides SQL query producing model predictions, which can be taken as a combination of the model itself plus the scoring process.
 The output SQL query can be treated as an artifact, but we can easily set up service for it on the database server.

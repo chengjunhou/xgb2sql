@@ -2,7 +2,7 @@
 % Please edit documentation in R/booster2sql.R
 \name{booster2sql}
 \alias{booster2sql}
-\title{Transform XGBoost model object to SQL query}
+\title{Transform XGBoost model object to SQL query.}
 \usage{
 booster2sql(xgbModel, print_progress = FALSE, unique_id = NULL,
   output_file_name = NULL, input_table_name = NULL,
@@ -41,7 +41,7 @@ providing a robust and efficient way of model deployment. It takes in the traine
 name of the input database table \code{input_table_name},
 and name of a unique identifier within that table \code{unique_id} as input,
 writes the SQL query to a file specified by \code{output_file_name}.
-Note that the input database table should be generated from the raw table using the one-hot encoding query output by \code{onehot2sql},
+Note that the input database table should be generated from the raw table using the one-hot encoding query output by \code{onehot2sql()},
 or to provide the one-hot encoding query as input \code{input_onehot_query} to this function, working as sub-query inside the final model scoring query.
 }
 \examples{
