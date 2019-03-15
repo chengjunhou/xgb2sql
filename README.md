@@ -2,6 +2,8 @@
 
 #### Released Version
 
+[![CRAN version](http://www.r-pkg.org/badges/version/xgb2sql)](https://cran.r-project.org/package=xgb2sql)
+
 #### Build Status
 
 [![Travis build status](https://travis-ci.org/chengjunhou/xgb2sql.svg?branch=master)](https://travis-ci.org/chengjunhou/xgb2sql)
@@ -198,6 +200,9 @@ Items under development are:
 - Support for `booster="gblinear`.
 - Support for other `objective`.
 - Support for customized loss function.
+
+- Support for pacakge **sparkxgb**, which is a [sparklyr](https://spark.rstudio.com/) extension 
+that provides an interface to [XGBoost](https://github.com/dmlc/xgboost) on Spark.
 
 
 
