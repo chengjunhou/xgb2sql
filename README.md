@@ -1,6 +1,6 @@
 # xgb2sql
 
-#### Released Version
+#### CRAN Release
 
 [![CRAN version](http://www.r-pkg.org/badges/version/xgb2sql)](https://cran.r-project.org/package=xgb2sql)
 
@@ -10,6 +10,8 @@
 
 #### Pacakge Vignettes
 
+[Deploy XGBoost Model as SQL Query](https://cran.r-project.org/web/packages/xgb2sql/vignettes/xgb2sql.html)
+
 #### Description
 
 This pacakge enables in-database scoring of XGBoost models built in R, by translating trained model objects into SQL query.
@@ -18,7 +20,10 @@ This pacakge enables in-database scoring of XGBoost models built in R, by transl
 
 ## Installation
 
-CRAN released version:
+Latest CRAN release:
+```r
+install.packages("xgb2sql")
+```
 
 Development version:
 ```r
