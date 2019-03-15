@@ -1,11 +1,11 @@
 Package: xgb2sql
 Type: Package
-Title: Convert Trained XGBoost Model to SQL Query
+Title: Convert Trained 'XGBoost' Model to SQL Query
 Version: 0.1.2
-Description: This tool enables in-database scoring of XGBoost models built in R, by translating trained model objects into SQL query. 
-  XGBoost <https://xgboost.readthedocs.io/en/latest/index.html> provides parallel tree boosting (also known as gradient boosting machine, or GBM) algorithms
+Description: This tool enables in-database scoring of 'XGBoost' models built in R, by translating trained model objects into SQL query. 
+  'XGBoost' <https://xgboost.readthedocs.io/en/latest/index.html> provides parallel tree boosting (also known as gradient boosting machine, or GBM) algorithms
   in a highly efficient, flexible and portable way. GBM algorithm is introduced by Friedman (2001) <doi:10.1214/aos/1013203451>, 
-  and more details on XGBoost can be found in Chen & Guestrin (2016) <doi:10.1145/2939672.2939785>.
+  and more details on 'XGBoost' can be found in Chen & Guestrin (2016) <doi:10.1145/2939672.2939785>.
 Authors@R: c(
   person("Chengjun", "Hou", role = c("aut", "cre"), email = "chengjun.hou@gmail.com"),
   person("Abhishek", "Bishoyi", role = c("aut"), email = "abhishek.bishoyi@gmail.com")

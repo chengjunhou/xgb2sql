@@ -2,6 +2,12 @@
 
 ## Resubmission
 This is a resubmission. In this version I have:
+* Added single quotes to the word XGBoost as requested by the reviewer. 
+And according to other packages on CRAN, word SQL stands for the language, same as R.
+So single quotes were not added to the word SQL.
+
+## Resubmission
+This is a resubmission. In this version I have:
 * Revised URL of the CRAN page for a task view in canonical form
 * Changed title case
 * Added reference citation to Description for the related methods
