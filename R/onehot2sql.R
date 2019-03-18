@@ -127,6 +127,9 @@ onehot2sql <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_wit
   #class.vec <- sapply(class.lst, function(x) paste(x,collapse=' '))
   num.vec <- names(class.lst)[class.lst%in%c('numeric','integer')]
   catg.vec <- names(class.lst)[!class.lst%in%c('numeric','integer')]
+  if (length(catg.vec)==0) {
+    stop('No need to one-hot encoding as no categorical column is found')
+  }
   catg.index <- which(names(data)%in%catg.vec)
   factor.index <- which(unname(sapply(class.lst, function(x) 'factor'%in%x)))
 
@@ -146,9 +149,18 @@ onehot2sql <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_wit
       contra.lst <- lapply(data[,catg.index,with=FALSE], contrasts, contrasts=FALSE)
     } else {
       if (length(changeclass.index)>0) {
-        data[,changeclass.index] <- lapply(data[,changeclass.index], as.factor)
+        if (length(changeclass.index)==1) {
+          data[,changeclass.index] <- lapply(data.frame(data[,changeclass.index]), as.factor)
+        } else {
+          data[,changeclass.index] <- lapply(data[,changeclass.index], as.factor)
+        }
       }
-      contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
+      if (length(catg.index)==1) {
+        contra.lst <- lapply(data.frame(data[,catg.index]), contrasts, contrasts=FALSE)
+        names(contra.lst)[1] <- paste0(catg.vec[1],sep)
+      } else {
+        contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
+      }
     }
 
     ### if contrasts given: change to factor with forced levels ###
@@ -159,9 +171,16 @@ onehot2sql <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_wit
       data[, (catg.index):=lapply(seq_along(.SD),function(i)
         factor(.SD[[i]],levels=rownames(contra.lst[[names(.SD)[[i]]]]))), .SDcols=catg.index]
     } else {
-      x <- data[, catg.index]
-      data[,catg.index] <- lapply(seq_along(x), function(i)
-        factor(x[[i]],levels=rownames(contra.lst[[names(x)[[i]]]])))
+      if (length(catg.index)==1) {
+        x <- data.frame(data[, catg.index])
+        names(x)[1] <- paste0(catg.vec[1],sep)
+        data[[paste0(catg.vec[1],sep)]] <- factor(data[[paste0(catg.vec[1],sep)]],
+                                                  levels=rownames(contra.lst[[paste0(catg.vec[1],sep)]]))
+      } else {
+        x <- data[, catg.index]
+        data[,catg.index] <- lapply(seq_along(x), function(i)
+          factor(x[[i]],levels=rownames(contra.lst[[names(x)[[i]]]])))
+      }
     }
     # catg feature with new level
     notin.list <- lapply(

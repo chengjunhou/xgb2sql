@@ -5,5 +5,6 @@
 
 
 # xgb2sql 0.2.0.9000
-
+* Fix issue for `onehot2sql()` processing data.frame with only one categorical feature.
+* Stop `onehot2sql()` and add stop message when there is no categorical feature in the input data.
 
