@@ -52,3 +52,18 @@ fun_data_prep(newdata, meta=out2$meta)$model.matrix
 
 
 
+zdf = data.frame(ggplot2::diamonds)[,c(2,5,6,7)]
+zdt = data.table(ggplot2::diamonds)[,c(2,5,6,7),with=FALSE]
+
+out1 <- fun_data_prep(zdf)
+head(out1$model.matrix)
+out2 <- fun_data_prep(zdt)
+head(out2$model.matrix)
+
+fun_data_prep(zdf[1:3,], meta=out1$meta)$model.matrix
+fun_data_prep(zdt[1:3,], meta=out1$meta)$model.matrix
+
+
+
+
+

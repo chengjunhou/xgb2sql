@@ -72,3 +72,21 @@ fun_xgboost_to_sql(bst,unique_id='ID',output_file_name='pad/xgb.txt',
 Sys.time() - time.now
 
 
+
+data = df
+catg.index = c(2,3,4)
+time.now <- Sys.time()
+for (i in 1:10000) {
+  contra.lst <- lapply(data[,catg.index], contrasts, contrasts=FALSE)
+}
+Sys.time() - time.now
+
+
+data = df
+catg.index = c(2,3,4)
+time.now <- Sys.time()
+for (i in 1:10000) {
+  contra.lst <- lapply(data.frame(data[,catg.index]), contrasts, contrasts=FALSE)
+}
+Sys.time() - time.now
+
