@@ -12,8 +12,8 @@ booster2sql(xgbModel, print_progress = FALSE, unique_id = NULL,
 \item{xgbModel}{The trained model object of class \code{xgb.Booster}.
 Current supported booster is \code{booster="gbtree"}, supported \code{objective} options are:
 \itemize{
-  \item – \code{reg:linear}: linear regression.
-  \item – \code{reg:logistic}: logistic regression.
+  \item – \code{reg:squarederror}: regression with squared loss.
+  \item – \code{reg:logistic}: logistic regression, output probability.
   \item - \code{binary:logistic}: logistic regression for binary classification, output probability.
   \item – \code{binary:logitraw}: logistic regression for binary classification, output score before logistic transformation.
   \item - \code{binary:hinge}: hinge loss for binary classification. This makes predictions of 0 or 1, rather than producing probabilities.

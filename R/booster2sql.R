@@ -11,8 +11,8 @@
 #' @param xgbModel The trained model object of class \code{xgb.Booster}.
 #' Current supported booster is \code{booster="gbtree"}, supported \code{objective} options are:
 #' \itemize{
-#'   \item – \code{reg:linear}: linear regression.
-#'   \item – \code{reg:logistic}: logistic regression.
+#'   \item – \code{reg:squarederror}: regression with squared loss.
+#'   \item – \code{reg:logistic}: logistic regression, output probability.
 #'   \item - \code{binary:logistic}: logistic regression for binary classification, output probability.
 #'   \item – \code{binary:logitraw}: logistic regression for binary classification, output score before logistic transformation.
 #'   \item - \code{binary:hinge}: hinge loss for binary classification. This makes predictions of 0 or 1, rather than producing probabilities.
@@ -79,7 +79,13 @@ booster2sql <- function(xgbModel, print_progress=FALSE, unique_id=NULL,
     if (grepl("leaf",local_dump[dump_index])==TRUE) {
       cat(sub(".*leaf= *(.*?)", "\\1", local_dump[dump_index]))
     } else {
-      cur_var_name <- g$feature_names[as.numeric(regmatches(local_dump[dump_index],regexec("f(.*?)[<]",local_dump[dump_index]))[[1]][2])+1]
+      # get feature name also compatible for history version
+      if (is.null(g$params)) {
+        cur_var_name <- regmatches(local_dump[dump_index],regexec("[[](.*?)[<]",local_dump[dump_index]))[[1]][2]
+      } else {
+        cur_var_name <- g$feature_names[as.numeric(regmatches(local_dump[dump_index],regexec("f(.*?)[<]",local_dump[dump_index]))[[1]][2])+1]
+      }
+      # get feature cut-value
       cur_var_val <- as.numeric(regmatches(local_dump[dump_index],regexec("[<](.*?)[]]",local_dump[dump_index]))[[1]][2])
 
       # if YES
@@ -106,22 +112,29 @@ booster2sql <- function(xgbModel, print_progress=FALSE, unique_id=NULL,
   sink(output_file_name, type ="output")
 
   cat("SELECT ", unique_id, ", ")
-  if(xgbModel$params$objective == "binary:logistic" | xgbModel$params$objective == "reg:logistic" | xgbModel$params$objective == "binary:logitraw"){
-    p0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
+  # get xgb params also compatible for history version
+  if (is.null(xgbModel$params)) {
+    xgbParams <- attributes(xgbModel)$params
+  } else {
+    xgbParams <- xgbModel$params
+  }
+
+  if(xgbParams$objective == "binary:logistic" | xgbParams$objective == "reg:logistic" | xgbParams$objective == "binary:logitraw"){
+    p0 <- ifelse(is.null(xgbParams$base_score),0.5,xgbParams$base_score)
     b0 <- log(p0/(1-p0))
-    if (xgbModel$params$objective == "binary:logitraw") {
+    if (xgbParams$objective == "binary:logitraw") {
       cat(b0,"+ SUM(ONETREE) AS XGB_PRED")
     } else {
       cat("1/(1+exp(-(",b0,"+ SUM(ONETREE)))) AS XGB_PRED")
     }
-  } else if (xgbModel$params$objective == "binary:hinge") {
-    b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
+  } else if (xgbParams$objective == "binary:hinge") {
+    b0 <- ifelse(is.null(xgbParams$base_score),0.5,xgbParams$base_score)
     cat("IF((",b0,"+ SUM(ONETREE) )>0,1,0) AS XGB_PRED")
-  } else if(xgbModel$params$objective == "reg:linear"){
-    b0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
+  } else if(xgbParams$objective == "reg:squarederror" | xgbParams$objective == "reg:linear"){
+    b0 <- ifelse(is.null(xgbParams$base_score),0.5,xgbParams$base_score)
     cat(b0,"+ SUM(ONETREE) AS XGB_PRED")
-  } else if(xgbModel$params$objective == "reg:gamma" | xgbModel$params$objective == "count:poisson" | xgbModel$params$objective == "reg:tweedie"){
-    mu0 <- ifelse(is.null(xgbModel$params$base_score),0.5,xgbModel$params$base_score)
+  } else if(xgbParams$objective == "reg:gamma" | xgbParams$objective == "count:poisson" | xgbParams$objective == "reg:tweedie"){
+    mu0 <- ifelse(is.null(xgbParams$base_score),0.5,xgbParams$base_score)
     b0 <- log(mu0)
     cat("exp(",b0,"+ SUM(ONETREE)) AS XGB_PRED")
   } else {
