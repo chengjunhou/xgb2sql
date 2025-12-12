@@ -1,6 +1,7 @@
 library(data.table)
 library(xgboost)
 library(xgb2sql)
+setwd("D:/Workspace/xgb2sql/pad/cj")
 df <- data.frame(ggplot2::diamonds)
 head(df)
 
@@ -28,10 +29,9 @@ if (is.null(bst$params)) {
 }
 
 booster2sql(bst, output_file_name='xgb.txt')
+booster2sql(bst)
 
 
-
-devtools::install("xgb2sql")
 
 
 xgb_dump <- xgboost::xgb.dump(bst)
@@ -46,4 +46,9 @@ regmatches(zxc_dump,regexec("[[](.*?)[<]",zxc_dump))[[1]][2]
 
 
 cat(readChar('xgb.txt', file.info('xgb.txt')$size))
+
+### install package in base R
+devtools::install("xgb2sql")
+### check build package
+"R CMD check xgb2sql_0.1.3.tar.gz --as-cran"
 

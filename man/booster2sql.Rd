@@ -26,7 +26,7 @@ Current supported booster is \code{booster="gbtree"}, supported \code{objective}
 
 \item{unique_id}{A row unique identifier is crucial for in-database scoring of XGBoost model. If not given, SQL query will be generated with id name "ROW_KEY".}
 
-\item{output_file_name}{File name that the SQL syntax will write to. It must not be empty in order for this function to run.}
+\item{output_file_name}{File name that the SQL syntax will write to. If empty the query will be printed to console.}
 
 \item{input_table_name}{Name of raw data table in the database, that the SQL query will select from. If not given, SQL query will be generated with table name "MODREADY_TABLE".}
 
@@ -65,5 +65,5 @@ bst <- xgboost(x = x,
                objective = 'reg:squarederror')
 
 # generate model scoring SQL script with ROW_KEY and MODREADY_TABLE
-booster2sql(bst, output_file_name='xgb.txt')
+booster2sql(bst)
 }

@@ -85,15 +85,14 @@ onehot2sql <- function(data, meta=NULL, sep="_", ws_replace=TRUE, ws_replace_wit
   ### initial setup ###
   if (is.null(unique_id)) {
     unique_id <- "ROW_KEY"
-    if (!is.null(output_file_name)) {
-      message("query is written to file with row unique id named as ROW_KEY")
-    }
+    message("Query is created with row unique id named as ROW_KEY")
   }
   if (is.null(input_table_name)) {
     input_table_name <- "INPUT_TABLE"
-    if (!is.null(output_file_name)) {
-      message("query is written to file with input table named as INPUT_TABLE")
-    }
+    message("Query is created with input table named as INPUT_TABLE")
+  }
+  if (!is.null(output_file_name)) {
+    message("Query is written to file")
   }
 
   ### compare with input meta if given ###
