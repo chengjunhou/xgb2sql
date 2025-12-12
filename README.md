@@ -8,6 +8,10 @@
 
 [![Travis build status](https://travis-ci.org/chengjunhou/xgb2sql.svg?branch=master)](https://travis-ci.org/chengjunhou/xgb2sql)
 
+#### Total Downloads
+
+[![](https://cranlogs.r-pkg.org/badges/grand-total/xgb2sql)](https://cran.r-project.org/web/packages/xgb2sql/index.html)
+
 #### Pacakge Vignettes
 
 [Deploy XGBoost Model as SQL Query](https://cran.r-project.org/web/packages/xgb2sql/vignettes/xgb2sql.html)
