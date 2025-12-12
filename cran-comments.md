@@ -1,7 +1,14 @@
 # Package Update - xgb2sql
 
 ## Resubmission
-This is a resubmission of existing package, resolving the build issue https://cran.r-project.org/web/checks/check_results_xgb2sql.html
+This is a resubmission:
+* Fixed URL issues on vignette and README.
+* Fixed "Check: for non-standard things in the check directory".
+* When missing `input_table_name` for `onehot2sql()`, the query will be printed to console.
+
+## Resubmission
+This is a submission for existing package, 
+resolving the build issue https://cran.r-project.org/web/checks/check_results_xgb2sql.html
 
 In this version I have:
 * Implemented fixes on utility function.

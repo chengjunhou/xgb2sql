@@ -6,15 +6,15 @@
 
 #### Build Status
 
-[![Travis build status](https://travis-ci.org/chengjunhou/xgb2sql.svg?branch=master)](https://travis-ci.org/chengjunhou/xgb2sql)
+[![Travis build status](https://app.travis-ci.com/chengjunhou/xgb2sql.svg?branch=master)]( https://app.travis-ci.com/chengjunhou/xgb2sql)
 
 #### Total Downloads
 
-[![](https://cranlogs.r-pkg.org/badges/grand-total/xgb2sql)](https://cran.r-project.org/web/packages/xgb2sql/index.html)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/xgb2sql)](https://cran.r-project.org/package=xgb2sql)
 
 #### Pacakge Vignettes
 
-[Deploy XGBoost Model as SQL Query](https://cran.r-project.org/web/packages/xgb2sql/vignettes/xgb2sql.html)
+[Deploy XGBoost Model as SQL Query](https://cran.r-project.org/package=xgb2sql)
 
 #### Description
 
@@ -210,7 +210,7 @@ Items under development are:
 - Support for other `objective`.
 - Support for customized loss function.
 
-- Support for pacakge **sparkxgb**, which is a [sparklyr](https://spark.rstudio.com/) extension 
+- Support for pacakge **sparkxgb**, which is a [sparklyr](https://spark.posit.co/) extension 
 that provides an interface to [XGBoost](https://github.com/dmlc/xgboost) on Spark.
 
 
