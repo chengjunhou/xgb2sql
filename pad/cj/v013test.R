@@ -30,11 +30,11 @@ if (is.null(bst$params)) {
 booster2sql(bst, output_file_name='xgb.txt')
 
 
+
 devtools::install("xgb2sql")
 
+
 xgb_dump <- xgboost::xgb.dump(bst)
-
-
 ###### get dump feature name ######
 ### old
 zxc_dump = "0:[f1<0.995000005] yes=1,no=2,missing=1"

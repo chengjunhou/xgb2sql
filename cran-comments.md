@@ -1,9 +1,12 @@
 # Package Update - xgb2sql
 
 ## Resubmission
-This is a resubmission of existing package. In this version I have:
+This is a resubmission of existing package, resolving the build issue https://cran.r-project.org/web/checks/check_results_xgb2sql.html
+
+In this version I have:
 * Implemented fixes on utility function.
-* Revised vignette and README following breaking changes on package xgboost.
+* Revised main function, vignette and README following breaking changes on package xgboost.
+* Note that the package is still compatible with history version of package xgboost.
 
 ## Old submission notes
 * This is a resubmission. In this version I have:
