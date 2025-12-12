@@ -4,7 +4,10 @@
 * Avaible functions are `onehot2sql()` and `booster2sql()`.
 
 
-# xgb2sql 0.2.0.9000
+# xgb2sql 0.1.3
 * Fix issue for `onehot2sql()` processing data.frame with only one categorical feature.
 * Stop `onehot2sql()` and add stop message when there is no categorical feature in the input data.
+* Fix example, vignette, and README following breaking changes on package xgboost
 
+
+# xgb2sql 0.1.4.9000

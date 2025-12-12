@@ -56,13 +56,13 @@ x <- out$model.matrix[,colnames(out$model.matrix)!='price']
 y <- out$model.matrix[,colnames(out$model.matrix)=='price']
 
 # model training
-bst <- xgboost(data = x,
-               label = y,
-               max.depth = 3,
-               eta = .3,
-               nround = 5,
-               nthread = 1,
-               objective = 'reg:linear')
+bst <- xgboost(x = x,
+               y = y,
+               max_depth = 3,
+               learning_rate = .3,
+               nrounds = 5,
+               nthreads = 1,
+               objective = 'reg:squarederror')
 
 # generate model scoring SQL script with ROW_KEY and MODREADY_TABLE
 booster2sql(bst, output_file_name='xgb.txt')

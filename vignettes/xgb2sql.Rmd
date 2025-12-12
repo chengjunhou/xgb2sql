@@ -221,12 +221,12 @@ we will train the model with `max.depth=2` and `nround=2`.
 ```{r}
 x <- out$model.matrix[,colnames(out$model.matrix)!='price']
 y <- out$model.matrix[,colnames(out$model.matrix)=='price']
-bst <- xgboost(data = x,
-               label = y,
-               max.depth = 2,
-               eta = .3,
-               nround = 2,
-               objective = 'reg:linear')
+bst <- xgboost(x = x,
+               y = y,
+               max_depth = 2,
+               learning_rate = .3,
+               nrounds = 2,
+               objective = 'reg:squarederror')
 booster2sql(bst, output_file_name='xgb.txt')
 ```
 

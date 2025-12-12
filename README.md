@@ -149,12 +149,12 @@ cat(out$sql)
 ### model training
 x <- out$model.matrix[,colnames(out$model.matrix)!='price']
 y <- out$model.matrix[,colnames(out$model.matrix)=='price']
-bst <- xgboost(data = x,
-               label = y,
-               max.depth = 2,
-               eta = .3,
-               nround = 2,
-               objective = 'reg:linear')
+bst <- xgboost(x = x,
+               y = y,
+               max_depth = 2,
+               learning_rate = .3,
+               nrounds = 2,
+               objective = 'reg:squarederror')
 #> [1]  train-rmse:4095.421387 
 #> [2]  train-rmse:3074.222412
 
